@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -I SDL/include
+CFLAGS = -I SDL/include -I include/
 LDFLAGS = -L SDL/lib
 LIBS = -lmingw32 -lSDL2main -lSDL2
 
@@ -18,14 +18,14 @@ OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(BUILD_DIR)/%.o,$(SRCS))
 DEPS = $(OBJS:.o=.d)
 
 # Target executable
-TARGET = main
+TARGET = run
 
 # Compilation rule to build object files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -MMD -MP -c $< -o $@
 
 # Rule to build the target executable
-$(BUILD_DIR)/$(TARGET): $(OBJS) | $(BUILD_DIR)
+$(TARGET): $(OBJS) | $(BUILD_DIR)
 	$(CC) $(LDFLAGS) -o $@ $^ $(LIBS)
 
 # Create build directory
